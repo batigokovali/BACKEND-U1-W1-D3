@@ -5,6 +5,7 @@ import { dirname, join } from "path";
 import uniqid from "uniqid"
 import createHttpError from "http-errors";
 import authorsRouter from "../authors/index.js";
+import { checkBlogpostsSchema, triggerBadRequest } from "./validation.js"
 
 const blogpostsRouter = Express.Router()
 
@@ -12,7 +13,7 @@ const blogpostsJSONPath = join(dirname(fileURLToPath(import.meta.url)), "blogpos
 const getBlogposts = () => JSON.parse(fs.readFileSync(blogpostsJSONPath))
 const writeBlogposts = blogpostsArray => fs.writeFileSync(blogpostsJSONPath, JSON.stringify(blogpostsArray))
 
-blogpostsRouter.post("/", (req, res, next) => {
+blogpostsRouter.post("/", checkBlogpostsSchema, triggerBadRequest, (req, res, next) => {
     const newBlogpost = { ...req.body, id: uniqid(), createdAt: new Date(), updatedAt: new Date() }
     const blogpostsArray = getBlogposts()
     blogpostsArray.push(newBlogpost)
