@@ -1,24 +1,3 @@
-// Authors should contain the following information:
-
-//     name
-//     surname
-//     ID (Unique and server-generated)
-//     email
-//     date of birth
-//     avatar (e.g. https://ui-avatars.com/api/?name=John+Doe)
-
-
-
-// The backend should include the following routes:
-
-//     GET /authors => returns the list of authors
-//     GET /authors/123 => returns a single author
-//     POST /authors => create a new author
-//     PUT /authors/123 => edit the author with the given id
-//     DELETE /authors/123 => delete the author with the given id
-
-
-
 import Express from "express";
 import fs from "fs";
 import { fileURLToPath } from "url";
@@ -27,13 +6,7 @@ import uniqid from "uniqid"
 
 const authorsRouter = Express.Router()
 
-// console.log("CURRENT FILE URL:", import.meta.url)
-// console.log("CURRENT FILE PATH:", fileURLToPath(import.meta.url))
-// console.log("PARENT FOLDER'S PATH:", dirname(fileURLToPath(import.meta.url)))
-// console.log("TARGET:", join(dirname(fileURLToPath(import.meta.url))),"authors.json")
-
 const authorsJSONPath = join(dirname(fileURLToPath(import.meta.url)), "authors.json")
-// console.log("TARGET:", join(dirname(fileURLToPath(import.meta.url))), "uthors.json")
 
 authorsRouter.post("/", (req, res) => {
     const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))//read the content of the file, obtaining an array
